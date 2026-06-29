@@ -1,0 +1,1192 @@
+/* ==========================================================================
+   D8000 OFFICIAL STYLING PARADIGM - PRODUCTION CORE ENGINE
+   ARCHITECT & OWNER: ENG / MOHAMED MAGDY (ELDODG)
+   VERSION: 2.6.0 (PREMIUM ULTRA-COMPATIBILITY & BOTTOM SHEET MATRIX)
+   ========================================================================== */
+
+:root {
+    --bg-color: #F7F5F0;
+    --primary-color: #111111;
+    --secondary-color: #7B6046;
+    --white: #FFFFFF;
+    --muted-gray: #888888;
+    --border-color: #E2DFD9;
+    --heading-font: 'Bebas Neue', sans-serif;
+    --body-font: 'Inter', sans-serif;
+    --arabic-font: 'Cairo', sans-serif;
+}
+
+/* ==========================================
+   1. Base Reset & Layout Architecture
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    cursor: default;
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    font-family: var(--body-font);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: padding-bottom 0.4s ease; /* سلاسة أثناء ظهور زرار الموبايل */
+}
+
+/* كلاس ديناميكي يتم تفعيله بالجافا سكريبت لمنع الـ Overlap */
+body.has-sticky-btn {
+    padding-bottom: 75px !important;
+}
+
+/* Custom Interactive Cursor Framework */
+.custom-cursor {
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 99999;
+    transition: transform 0.1s ease, width 0.2s, height 0.2s;
+    display: none;
+}
+
+.custom-cursor.hovered {
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    border: 1px solid var(--secondary-color);
+}
+
+@media (max-width: 1024px) {
+    * { cursor: auto !important; }
+    .custom-cursor { display: none !important; }
+}
+
+/* ==========================================
+   2. Cinematic Intro Screen (iOS & Mobile Ultra Fix)
+   ========================================== */
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.8s;
+}
+
+.intro-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.intro-overlay video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.45;
+}
+
+.intro-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: var(--white);
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.intro-logo {
+    font-family: var(--heading-font);
+    font-size: calc(3.5rem + 3.5vw);
+    letter-spacing: 12px;
+    line-height: 1;
+    margin-bottom: 10px;
+    animation: fadeInUp 1.2s ease forwards;
+}
+
+.intro-slogan {
+    font-size: calc(0.7rem + 0.2vw);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-bottom: 40px;
+    color: #CCCCCC;
+    animation: fadeInUp 1.5s ease forwards;
+}
+
+.enter-btn {
+    background: transparent;
+    border: 1px solid var(--white);
+    color: var(--white);
+    padding: 14px 45px;
+    font-size: 0.85rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.4s ease;
+    animation: fadeInUp 1.8s ease forwards;
+    cursor: pointer;
+}
+
+.enter-btn:hover {
+    background-color: var(--white);
+    color: #000000;
+}
+
+/* ==========================================
+   3. Navigation Framework
+   ========================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    z-index: 999;
+    transition: all 0.4s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.navbar.scrolled {
+    background-color: rgba(247, 245, 240, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    height: 70px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0 4%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-logo {
+    font-family: var(--heading-font);
+    font-size: 2.2rem;
+    letter-spacing: 4px;
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+.nav-links {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    padding: 4px 0;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-shop-btn {
+    text-decoration: none;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 10px 24px;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.nav-shop-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+/* ==========================================
+   4. Hero Section & Typography Rules
+   ========================================== */
+.hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 8%;
+    overflow: hidden;
+}
+
+.hero-parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    background-image: url('https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1920&q=85');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    transform: translateY(0);
+}
+
+.hero-content {
+    max-width: 700px;
+    z-index: 2;
+    color: var(--white);
+    mix-blend-mode: difference;
+}
+
+.hero-est {
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.hero-title {
+    font-family: var(--heading-font);
+    font-size: calc(3rem + 2.5vw);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 5px;
+    margin-bottom: 35px;
+    color: #DDDDDD;
+}
+
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 16px 40px;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--white);
+    color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-secondary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-color);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--white);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    mix-blend-mode: difference;
+}
+
+.mouse {
+    width: 20px;
+    height: 32px;
+    border: 1px solid var(--white);
+    border-radius: 10px;
+    position: relative;
+}
+
+.mouse::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background-color: var(--white);
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    animation: scrollAnimation 1.5s infinite;
+}
+
+/* ==========================================
+   5. Editorial Campaign Infrastructure
+   ========================================== */
+.campaign-section {
+    padding: 120px 4%;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+.section-header {
+    margin-bottom: 60px;
+}
+
+.section-tag {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    color: var(--secondary-color);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-family: var(--heading-font);
+    font-size: 3rem;
+    letter-spacing: 2px;
+    line-height: 1;
+}
+
+.campaign-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.campaign-card {
+    position: relative;
+    overflow: hidden;
+    height: 750px;
+}
+
+.campaign-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.campaign-card:hover img {
+    transform: scale(1.04);
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    color: var(--white);
+    z-index: 2;
+}
+
+.card-overlay p {
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    font-weight: 500;
+}
+
+/* ==========================================
+   6. Core Flagship Product Ecosystem
+   ========================================== */
+.product-section {
+    padding: 80px 4% 120px;
+    max-width: 1800px;
+    margin: 0 auto;
+    border-top: 1px solid var(--border-color);
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+}
+
+.product-gallery {
+    position: relative;
+    top: 0;
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.main-display {
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+    background-color: #f4f4f4;
+    margin-bottom: 20px;
+}
+
+.main-display img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+.thumbnail-slider {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    justify-content: center;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+}
+
+.thumbnail-slider::-webkit-scrollbar {
+    height: 5px;
+}
+
+.thumbnail-slider::-webkit-scrollbar-thumb {
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+}
+
+.thumbnail-slider img {
+    width: 90px;
+    height: 110px;
+    object-fit: cover;
+    border: 1px solid transparent;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.thumbnail-slider img.active, .thumbnail-slider img:hover {
+    opacity: 1;
+    border-color: var(--primary-color);
+}
+
+/* Product Meta Engine */
+.product-meta {
+    margin-bottom: 35px;
+}
+
+.brand-badge {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--secondary-color);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.product-title {
+    font-size: 2.2rem;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    margin-bottom: 15px;
+}
+
+.price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.price-old {
+    font-size: 1.25rem;
+    color: var(--muted-gray);
+    text-decoration: line-through;
+}
+
+.price-current {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.sale-badge {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    font-size: 0.65rem;
+    padding: 4px 10px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+/* Urgent Module Engine */
+.urgency-engine {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    padding: 24px;
+    margin-bottom: 40px;
+}
+
+.timer-box {
+    margin-bottom: 20px;
+}
+
+.urgency-label {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--muted-gray);
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.timer-digits {
+    font-family: var(--heading-font);
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.stock-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.stock-count {
+    color: var(--secondary-color);
+    animation: pulse 2s infinite;
+}
+
+.stock-bar-container {
+    width: 100%;
+    height: 4px;
+    background-color: var(--border-color);
+}
+
+.stock-bar-fill {
+    height: 100%;
+    background-color: var(--secondary-color);
+    transition: width 1s ease-in-out;
+}
+
+/* Direct Option Interfaces */
+.selectors-container {
+    margin-bottom: 40px;
+}
+
+.selector-group {
+    margin-bottom: 25px;
+}
+
+.selector-label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--primary-color);
+}
+
+.color-swatches {
+    display: flex;
+    gap: 15px;
+}
+
+.swatch-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    outline: none;
+    transition: transform 0.2s ease, border-color 0.2s;
+    cursor: pointer;
+}
+
+.swatch-btn.active {
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.size-selector {
+    display: flex;
+    gap: 10px;
+}
+
+/* ==========================================
+   7. Premium Modal Window & Checkout Systems (Ultra-Compact Setup)
+   ========================================== */
+#checkoutModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.4s;
+    padding: 15px;
+}
+
+#checkoutModal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.checkout-modal-window {
+    background-color: var(--bg-color);
+    width: 100%;
+    max-width: 650px;
+    padding: 40px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--primary-color);
+    transform: translateY(30px);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#checkoutModal.active .checkout-modal-window {
+    transform: translateY(0);
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--primary-color);
+    transition: color 0.3s;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.close-modal-btn:hover { color: var(--secondary-color); }
+
+/* Sizing Elements Engine */
+.size-guide-box {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.size-guide-box h5 {
+    font-family: var(--arabic-font);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    color: var(--secondary-color);
+}
+
+.guide-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.guide-row:last-child { border: none; }
+
+.size-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.size-circle-btn {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    padding: 14px 10px;
+    font-weight: 600;
+    font-family: var(--body-font);
+    font-size: 0.9rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: pointer;
+}
+
+.size-circle-btn.active, .size-circle-btn:hover {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+/* Anchor Fields Core */
+.checkout-anchor {
+    background-color: var(--white);
+    border: 1px solid var(--primary-color);
+    padding: 40px;
+}
+
+.checkout-title {
+    font-family: var(--arabic-font);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    text-align: right;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.form-group label {
+    display: block;
+    font-family: var(--arabic-font);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    padding: 14px;
+    font-family: var(--body-font);
+    font-size: 0.85rem;
+    color: var(--primary-color);
+    outline: none;
+    transition: border-color 0.3s ease;
+    text-align: right;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--primary-color);
+}
+
+/* Summary Module */
+.invoice-summary {
+    background-color: var(--bg-color);
+    padding: 20px;
+    margin: 30px 0;
+    direction: rtl;
+}
+
+.invoice-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    font-family: var(--arabic-font);
+}
+
+.invoice-divider {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 12px 0;
+}
+
+.total-row {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--primary-color);
+}
+
+/* ==========================================
+   8. Brand Philosophy & Reviews Framework (Infinite Dynamic Scroll)
+   ========================================== */
+.brand-philosophy {
+    padding: 140px 4%;
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-align: center;
+}
+
+.philosophy-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.brand-philosophy h2 {
+    font-family: var(--heading-font);
+    font-size: 4rem;
+    letter-spacing: 4px;
+    margin-bottom: 25px;
+}
+
+.philosophy-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    font-weight: 300;
+    color: #CCCCCC;
+    letter-spacing: 0.5px;
+}
+
+.reviews-section {
+    padding: 120px 0;
+    overflow: hidden;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.center-align {
+    text-align: center;
+}
+
+.reviews-wrapper {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+/* دعم تراك السكرول العريض للأداء العالي والـ Autoplay */
+.reviews-grid-scrollable {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    padding: 10px 4%;
+    scrollbar-width: none; /* إخفاء السكرول بار التقليدي */
+}
+
+.reviews-grid-scrollable::-webkit-scrollbar {
+    display: none;
+}
+
+.review-card {
+    background-color: var(--bg-color);
+    padding: 35px;
+    width: 380px;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.review-stars {
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+.review-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    direction: rtl;
+    text-align: right;
+    font-family: var(--arabic-font);
+}
+
+.review-author {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: var(--muted-gray);
+    text-align: right;
+    font-family: var(--arabic-font);
+}
+
+/* 🚀 الزرار العائم الذكي للموبايل مع دقة السكرول */
+#stickyMobileBtn {
+    position: fixed;
+    bottom: -80px;
+    left: 5%;
+    width: 90%;
+    z-index: 9999;
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: bottom 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    font-family: var(--arabic-font);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    border-radius: 0;
+    display: none; /* مخفي افتراضياً ويظهر فقط عبر الميديا كويري والجافا سكريبت */
+    border: none;
+    padding: 15px;
+    text-align: center;
+}
+
+#stickyMobileBtn.show {
+    bottom: 20px;
+}
+
+/* ==========================================
+   9. FAQ Accordions & Legal Systems
+   ========================================== */
+.faq-section {
+    padding: 120px 4%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.faq-container {
+    margin-top: 60px;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.faq-trigger {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 25px 0;
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.faq-trigger span {
+    font-size: 1.2rem;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+}
+
+.faq-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.faq-panel p {
+    padding-bottom: 25px;
+    font-size: 0.85rem;
+    color: var(--muted-gray);
+    line-height: 1.7;
+}
+
+.faq-item.active .faq-trigger {
+    color: var(--secondary-color);
+}
+
+.faq-item.active .faq-trigger span {
+    transform: rotate(45deg);
+}
+
+.legal-framework {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0 4% 80px;
+}
+
+.legal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 60px;
+}
+
+.legal-box h4 {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.legal-box p {
+    font-size: 0.8rem;
+    color: var(--muted-gray);
+    line-height: 1.6;
+}
+
+/* ==========================================
+   10. Corporate Luxury Footer System
+   ========================================== */
+.luxury-footer {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 80px 4% 40px;
+    border-top: 1px solid #222222;
+}
+
+.footer-top {
+    max-width: 1800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 80px;
+}
+
+.footer-brand h3 {
+    font-family: var(--heading-font);
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.footer-slogan {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: #888888;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 30px;
+}
+
+.footer-socials a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.footer-socials a:hover {
+    color: var(--secondary-color);
+}
+
+.footer-bottom {
+    max-width: 1800px;
+    margin: 0 auto;
+    border-top: 1px solid #222222;
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    color: #666666;
+}
+
+.developer-credit {
+    font-weight: 500;
+}
+
+.dev-link {
+    color: var(--white);
+    text-decoration: none;
+    border-bottom: 1px solid #444444;
+    transition: all 0.3s ease;
+}
+
+.dev-link:hover {
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* Animations Framework */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scrollAnimation {
+    0% { opacity: 1; top: 6px; }
+    50% { opacity: 0.3; top: 18px; }
+    100% { opacity: 1; top: 6px; }
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* ==========================================
+   11. Adaptive Mobile Matrix Rules (Premium Bottom Sheet Engine)
+   ========================================== */
+@media (max-width: 1200px) {
+    .hero-title { font-size: 4rem; }
+    .product-container { grid-template-columns: 1fr; gap: 50px; }
+    .product-gallery { position: relative; top: 0; }
+    .main-display { height: 600px; }
+    .campaign-card { height: 550px; }
+}
+
+@media (max-width: 768px) {
+    html { font-size: 15px; }
+    .navbar { height: 75px; }
+    .nav-links { display: none; }
+    .hero { padding: 0 5%; }
+    .hero-title { font-size: 3.2rem; }
+    .campaign-grid { grid-template-columns: 1fr; gap: 20

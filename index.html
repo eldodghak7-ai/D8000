@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>D8000 | LESS NOISE. MORE PURPOSE.</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        :root {
+            --primary-color: #0b0b0b;
+            --white: #ffffff;
+            --light-bg: #f7f7f7;
+            --muted-gray: #767676;
+            --border-color: #e5e5e5;
+            --heading-font: 'Bebas Neue', sans-serif;
+            --body-font: 'Inter', sans-serif;
+            --arabic-font: 'Cairo', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: var(--body-font); background-color: var(--white); color: var(--primary-color); overflow-x: hidden; -webkit-font-smoothing: antialiased; transition: padding-bottom 0.3s ease; }
+
+        /* 1. إصلاح شامل وتأمين توافق إنترو الفيديو على الموبايل والآيفون */
+        .intro-overlay {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100vh;
+            background: #000; 
+            z-index: 99999; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s ease;
+        }
+        .intro-overlay.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .intro-overlay video { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            min-width: 100%; 
+            min-height: 100%; 
+            width: auto; 
+            height: auto; 
+            transform: translate(-50%, -50%); 
+            object-fit: cover; 
+            opacity: 0.55; 
+        }
+        
+        /* 🔥 حل أزمة شاشات الكمبيوتر: عرض الفيديو كامل بدون قَص أو زوم عشوائي */
+        @media (min-width: 1024px) {
+            .intro-overlay video {
+                object-fit: contain;
+                max-width: 100vw;
+                max-height: 100vh;
+                width: 100%;
+                height: 100%;
+            }
+        }
+        
+        .intro-content { position: relative; z-index: 10; text-align: center; color: #fff; padding: 20px; }
+        .intro-logo { font-family: var(--heading-font); font-size: 5.5rem; letter-spacing: 6px; margin-bottom: 5px; text-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        .intro-tagline { font-family: var(--heading-font); font-size: 1.1rem; letter-spacing: 3px; color: #ccc; margin-bottom: 25px; text-transform: uppercase; }
+        .enter-btn { background: #fff; color: #000; border: none; padding: 14px 40px; font-family: var(--heading-font); font-size: 1.2rem; letter-spacing: 2px; cursor: pointer; border-radius: 50px; font-weight: bold; transition: transform 0.3s ease, background 0.2s; }
+        .enter-btn:hover { transform: scale(1.05); background: #eee; }
+
+        /* 2. الـ Premium Sticky Navigation */
+        .premium-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05); transition: all 0.3s ease;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 15px 25px; }
+        .nav-logo { font-family: var(--heading-font); font-size: 1.8rem; font-weight: bold; letter-spacing: 2px; color: var(--primary-color); text-decoration: none; }
+        .nav-links-desktop { display: flex; gap: 30px; }
+        .nav-links-desktop a { text-decoration: none; color: var(--primary-color); font-family: var(--heading-font); font-size: 0.95rem; font-weight: 500; letter-spacing: 1px; transition: color 0.2s; }
+        .nav-links-desktop a:hover { color: var(--muted-gray); }
+        .nav-actions .nav-cta-btn { text-decoration: none; background: #000; color: #fff; padding: 8px 20px; border-radius: 50px; font-family: var(--heading-font); font-size: 0.9rem; font-weight: 600; transition: background 0.2s; }
+        .nav-actions .nav-cta-btn:hover { background: #222; }
+
+        /* 3. الهيدر والـ Hero */
+        .hero { position: relative; height: 100vh; display: flex; align-items: flex-end; justify-content: flex-start; padding: 80px 40px; overflow: hidden; margin-top: 0; }
+        .hero-parallax-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('images/campaign/campaign1.jpg'); background-size: cover; background-position: center; z-index: 1; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.85) 100%); z-index: 2; }
+        .hero-content { position: relative; z-index: 3; max-width: 600px; color: var(--white); text-align: right; margin-bottom: 20px; width: 100%; margin-right: auto; margin-left: 0; }
+        .hero-title-ar { font-family: var(--arabic-font); font-size: 3.2rem; font-weight: 700; line-height: 1.25; text-shadow: 0 4px 15px rgba(0,0,0,0.5); direction: rtl; }
+
+        /* 4. شبكة المنتجات وسلايدر الصور الاحترافي */
+        .modern-products-section { padding: 100px 20px 80px 20px; background: var(--white); }
+        .section-header-centered { text-align: center; margin-bottom: 50px; }
+        .section-header-centered h3 { font-family: var(--heading-font); font-size: 2.5rem; letter-spacing: 2px; margin-bottom: 5px; }
+        .section-header-centered p { font-family: var(--arabic-font); color: var(--muted-gray); font-size: 1.1rem; }
+        
+        .products-grid-clean { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .clean-product-card { background: var(--white); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid #eeeeee; padding: 16px; transition: transform 0.3s ease; }
+        .clean-product-card:hover { transform: translateY(-5px); }
+        
+        .product-slider-container { position: relative; width: 100%; aspect-ratio: 3/4; background: #f4f4f4; border-radius: 12px; overflow: hidden; }
+        .product-image-track { display: flex; width: 100%; height: 100%; overflow-x: scroll; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        .product-image-track::-webkit-scrollbar { display: none; }
+        
+        .product-slide { min-width: 100%; width: 100%; height: 100%; scroll-snap-align: start; }
+        .product-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .slider-dots { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10; }
+        .dot { width: 7px; height: 7px; background: rgba(0,0,0,0.2); border-radius: 50%; transition: all 0.3s ease; }
+        .dot.active { background: #000; width: 18px; border-radius: 4px; }
+
+        .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; background: rgba(255, 255, 255, 0.75); border: none; border-radius: 50%; font-size: 1.1rem; font-weight: bold; cursor: pointer; z-index: 15; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: background 0.2s; }
+        .slider-arrow:hover { background: rgba(255, 255, 255, 0.95); }
+        .arrow-prev { left: 12px; }
+        .arrow-next { right: 12px; }
+
+        .sale-tag { position: absolute; top: 15px; left: 15px; background: #000; color: #fff; padding: 5px 14px; font-size: 0.8rem; font-weight: 600; border-radius: 50px; z-index: 5; font-family: var(--heading-font); letter-spacing: 1px; }
+        
+        .product-meta-zone { padding: 18px 5px 0 5px; text-align: right; direction: rtl; }
+        .product-meta-zone h4 { font-family: var(--arabic-font); font-size: 1.15rem; margin-bottom: 8px; color: #111; font-weight: 600; }
+        .price-container { font-size: 1.25rem; font-weight: 700; color: #000; font-family: var(--body-font); }
+        .old-price { color: var(--muted-gray); text-decoration: line-through; font-size: 0.95rem; margin-right: 10px; font-weight: 400; }
+
+        .card-action-button { background: #000; color: #fff; border: none; width: 100%; padding: 15px; border-radius: 10px; font-family: var(--arabic-font); font-size: 1.05rem; font-weight: 600; cursor: pointer; margin-top: 15px; transition: background 0.2s, transform 0.1s; text-align: center; }
+        .card-action-button:hover { background: #222; }
+        .card-action-button:active { transform: scale(0.99); }
+
+        /* 5. قسم ريفيو العملاء السلس السريع */
+        .egyptian-reviews-section { background: var(--light-bg); padding: 90px 20px; overflow: hidden; }
+        .reviews-main-title { font-family: var(--arabic-font); text-align: center; font-size: 2.3rem; font-weight: 700; margin-bottom: 45px; letter-spacing: -0.5px; }
+        
+        .reviews-grid-scrollable { 
+            display: flex; 
+            gap: 24px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            overflow-x: auto; 
+            scroll-snap-type: x mandatory;
+            padding: 10px 5px 25px 5px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .reviews-grid-scrollable::-webkit-scrollbar { height: 6px; }
+        .reviews-grid-scrollable::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.1); border-radius: 10px; }
+        
+        .review-card-eg { 
+            background: var(--white); 
+            padding: 28px; 
+            border-radius: 16px; 
+            text-align: right; 
+            direction: rtl; 
+            border: 1px solid #eef0f2; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01); 
+            transition: transform 0.2s ease; 
+            min-width: 320px;
+            max-width: 350px;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+        }
+        .review-card-eg:hover { transform: translateY(-3px); }
+        .reviewer-info { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; position: relative; }
+        .reviewer-avatar { width: 44px; height: 44px; background: #111; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--arabic-font); font-weight: bold; font-size: 1rem; }
+        .reviewer-details h5 { font-family: var(--arabic-font); font-size: 1.05rem; margin: 0; color: #111; font-weight: 700; }
+        .review-stars { color: #ffb300; font-size: 0.9rem; margin-top: 2px; letter-spacing: 1px; }
+        .verified-badge { font-size: 0.75rem; color: #2e7d32; background: #e8f5e9; padding: 3px 10px; border-radius: 6px; margin-right: auto; font-family: var(--arabic-font); font-weight: 600; }
+        .review-text { font-family: var(--arabic-font); font-size: 0.98rem; color: #333; line-height: 1.65; }
+
+        /* 6. الفوتر والامضاء الهندسي */
+        .brand-footer-system { background: #000; color: #fff; padding: 40px 20px; text-align: center; border-top: 1px solid #222; }
+        .footer-container { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .footer-logo { font-family: var(--heading-font); font-size: 2rem; letter-spacing: 3px; }
+        .footer-meta { font-family: var(--body-font); font-size: 0.85rem; color: #666; }
+        .footer-signature { font-family: var(--arabic-font); font-size: 0.85rem; color: #888; margin-top: 5px; }
+        .footer-signature a { color: #fff; text-decoration: none; font-weight: bold; border-bottom: 1px solid #444; padding-bottom: 2px; }
+
+        /* 🚀 7. كود الـ Premium UI المطور بالكامل للمودال والفورم المدمج */
+        .checkout-modal-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: flex-end; /* يفتح من أسفل الشاشة كـ Bottom Sheet فخم */
+            z-index: 100000;
+        }
+        .checkout-modal-backdrop.active { display: flex; }
+
+        .checkout-modal-window {
+            background: #fff;
+            width: 100%;
+            max-width: 480px;
+            border-radius: 24px 24px 0 0;
+            padding: 20px;
+            box-sizing: border-box;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        .checkout-modal-backdrop.active .checkout-modal-window { transform: translateY(0); }
+
+        /* إغلاق المودال */
+        .close-modal-btn {
+            position: absolute;
+            top: 15px; left: 15px;
+            background: #f0ede6;
+            border: none;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10;
+        }
+
+        /* هيدر مدمج يوفر المساحة الرأسية بالكامل */
+        .modal-header-compact {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+            margin-bottom: 14px;
+            direction: rtl;
+        }
+        .modal-product-preview {
+            width: 65px; height: 65px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f5f5f5;
+            flex-shrink: 0;
+        }
+        .modal-product-preview img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .modal-header-details { text-align: right; }
+        .modal-header-details h3 { font-family: var(--arabic-font); font-size: 1.05rem; font-weight: 700; color: #111; margin-bottom: 2px; }
+        .modal-header-details .modal-price { font-family: var(--body-font); font-size: 1.1rem; font-weight: 700; color: #000; }
+
+        /* مساحة الحقول المدمجة القابلة للسكرول الداخلي النظيف فقط */
+        .modal-scrollable-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+            padding-bottom: 10px;
+        }
+        .modal-scrollable-form::-webkit-scrollbar { width: 4px; }
+        .modal-scrollable-form::-webkit-scrollbar-thumb { background: #eee; border-radius: 4px; }
+
+        .form-group-compact { display: flex; flex-direction: column; text-align: right; direction: rtl; }
+        .form-group-compact label { font-family: var(--arabic-font); font-size: 0.85rem; font-weight: 600; color: #444; margin-bottom: 6px; }
+        
+        /* صف الأزرار للمقاسات */
+        .size-circles-wrapper { display: flex; gap: 8px; justify-content: flex-start; direction: ltr; }
+        .size-circle-btn { flex: 1; height: 42px; border-radius: 10px; border: 1px solid #ccc9bf; background: #fff; font-family: var(--body-font); font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+        .size-circle-btn.active { border-color: #000; background: #000; color: #fff; }
+
+        .form-group-compact input, .form-group-compact select {
+            width: 100%; height: 46px; border: 1px solid #ccc9bf; background: #fff; border-radius: 10px; padding: 0 14px; box-sizing: border-box; font-size: 0.95rem; font-family: var(--arabic-font); transition: border-color 0.2s;
+        }
+        .form-group-compact input:focus, .form-group-compact select:focus { border-color: #000; outline: none; }
+
+        /* تقسيم حقل المحافظة والعنوان في سطر واحد مدمج */
+        .form-row-split { display: flex; gap: 10px; }
+        .split-geo { flex: 4; }
+        .split-addr { flex: 6; }
+
+        /* شريط ملخص الحساب الذكي المدمج */
+        .invoice-summary-strip {
+            display: flex;
+            justify-content: space-between;
+            background: #f7f7f7;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-family: var(--arabic-font);
+            font-size: 0.9rem;
+            direction: rtl;
+            margin-top: 5px;
+        }
+        .invoice-strip-item span { font-weight: 700; color: #000; }
+
+        /* زر الإرسال الاحترافي السريع */
+        .modal-submit-btn {
+            width: 100%; height: 52px; background: #000; color: #fff; border: none; border-radius: 14px; font-family: var(--arabic-font); font-weight: 700; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: background 0.2s;
+        }
+        .modal-submit-btn:hover { background: #222; }
+
+        /* 🔥 زرار الشراء العائم الذكي للموبايل والـ iOS - نسخة التوافق المطلق */
+        .sticky-mobile-order-btn {
+            position: fixed;
+            bottom: -80px; /* بيترفع عن طريق الـ JavaScript بإضافة الكلاس show */
+            left: 0;
+            width: 100%;
+            height: 60px;
+            z-index: 9999;
+            background-color: var(--primary-color);
+            color: var(--white);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+            transition: bottom 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            font-family: var(--arabic-font);
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: none; /* بيظهر في الموبايل فقط بسياق ميديا كويري */
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            direction: rtl;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            .sticky-mobile-order-btn { 
+                display: flex; /* تفعيل الـ Flex عشان النص والسنترة يبقوا مظبوطين */
+            }
+            body.has-sticky-btn {
+                padding-bottom: 60px; /* مساحة أمان عشان الفوتر والموقع ميتخنقوش تحت الزرار */
+            }
+            .sticky-mobile-order-btn.show { 
+                bottom: 0; /* ملتصق تماماً بالأسفل زي الـ Native Premium Apps */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="intro-overlay" id="introOverlay">
+        <video id="introVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
+            <source src="video/intro.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="intro-content">
+            <h1 class="intro-logo">D8000</h1>
+            <p class="intro-tagline">Less Noise. More Purpose.</p>
+            <button class="enter-btn" id="enterBtn" onclick="closeIntro()">ENTER SITE</button>
+        </div>
+    </div>
+
+    <header class="premium-navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">D8000</a>
+            <nav class="nav-links-desktop">
+                <a href="#products">COLLECTION</a>
+                <a href="#reviews">REVIEWS</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="#products" class="nav-cta-btn">SHOP NOW</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-parallax-bg"></div>
+        <div class="hero-content">
+            <span style="font-family: var(--arabic-font); font-size: 0.95rem; letter-spacing: 1px; color: #eee; font-weight: 600; display: block; margin-bottom: 5px;">ARCHIVE / DROP 01</span>
+            <h2 class="hero-title-ar">ضوضاء أقل.<br>هدف أكثر.</h2>
+            <a href="#products" style="display:inline-block; text-decoration:none; text-align:center; padding:14px 38px; background:#fff; color:#000; font-family:var(--arabic-font); margin-top:25px; font-weight:700; border-radius:50px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">استكشف القطع</a>
+        </div>
+    </section>
+
+    <section class="modern-products-section" id="products">
+        <div class="section-header-centered">
+            <h3>THE HEAVYWEIGHT ESSENTIALS</h3>
+            <p>قطع مصممة بعناية فائقة من القطن المصري الفاخر 100% بوزن 320 GSM</p>
+        </div>
+
+        <div class="products-grid-clean">
+            
+            <div class="clean-product-card">
+                <div class="product-slider-container">
+                    <span class="sale-tag">320 GSM</span>
+                    <button class="slider-arrow arrow-prev" onclick="moveSlider(this, -1)">&lt;</button>
+                    <button class="slider-arrow arrow-next" onclick="moveSlider(this, 1)">&gt;</button>
+                    
+                    <div class="product-image-track" onscroll="updateDots(this, 0)">
+                        <div class="product-slide"><img src="images/products/black/black1.jpg" alt="Black Front"></div>
+                        <div class="product-slide"><img src="images/products/black/black2.jpg" alt="Black Back"></div>
+                    </div>
+                    <div class="slider-dots"><div class="dot active"></div><div class="dot"></div></div>
+                </div>
+                <div class="product-meta-zone">
+                    <h4>Essential Black Oversized T-Shirt</h4>
+                    <div class="price-container"><span>550 EGP</span><span class="old-price">800 EGP</span></div>
+                </div>
+                <button class="card-action-button" onclick="openPurchaseModal('Core Black', 'images/products/black/black1.jpg')">اشتري الآن / Purchase Piece</button>
+            </div>
+
+            <div class="clean-product-card">
+                <div class="product-slider-container">
+                    <span class="sale-tag">320 GSM</span>
+                    <button class="slider-arrow arrow-prev" onclick="moveSlider(this, -1)">&lt;</button>
+                    <button class="slider-arrow arrow-next" onclick="moveSlider(this, 1)">&gt;</button>
+                    
+                    <div class="product-image-track" onscroll="updateDots(this, 1)">
+                        <div class="product-slide"><img src="images/products/white/white1.jpg" alt="White Front"></div>
+                        <div class="product-slide"><img src="images/products/white/white2.jpg" alt="White Back"></div>
+                    </div>
+                    <div class="slider-dots"><div class="dot active"></div><div class="dot"></div></div>
+                </div>
+                <div class="product-meta-zone">
+                    <h4>Essential White Oversized T-Shirt</h4>
+                    <div class="price-container"><span>550 EGP</span><span class="old-price">800 EGP</span></div>
+                </div>
+                <button class="card-action-button" onclick="openPurchaseModal('Anchor White', 'images/products/white/white1.jpg')">اشتري الآن / Purchase Piece</button>
+            </div>
+
+            <div class="clean-product-card">
+                <div class="product-slider-container">
+                    <span class="sale-tag">320 GSM</span>
+                    <button class="slider-arrow arrow-prev" onclick="moveSlider(this, -1)">&lt;</button>
+                    <button class="slider-arrow arrow-next" onclick="moveSlider(this, 1)">&gt;</button>
+                    
+                    <div class="product-image-track" onscroll="updateDots(this, 2)">
+                        <div class="product-slide"><img src="images/products/brown/brown1.jpg" alt="Brown Front" onerror="this.src='images/products/brown/brown1.JPG'"></div>
+                        <div class="product-slide"><img src="images/products/brown/brown2.jpg" alt="Brown Back" onerror="this.src='images/products/brown/brown2.JPG'"></div>
+                    </div>
+                    <div class="slider-dots"><div class="dot active"></div><div class="dot"></div></div>
+                </div>
+                <div class="product-meta-zone">
+                    <h4>Essential Brown Oversized T-Shirt</h4>
+                    <div class="price-container"><span>550 EGP</span><span class="old-price">800 EGP</span></div>
+                </div>
+                <button class="card-action-button" onclick="openPurchaseModal('Earth Brown', 'images/products/brown/brown1.jpg')">اشتري الآن / Purchase Piece</button>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="egyptian-reviews-section" id="reviews">
+        <h3 class="reviews-main-title">آراء العملاء / Verified Reviews</h3>
+        <div class="reviews-grid-scrollable" id="dynamicReviewsGrid"></div>
+    </section>
+
+    <div class="checkout-modal-backdrop" id="checkoutModal" onclick="if(event.target===this) closePurchaseModal()">
+        <div class="checkout-modal-window">
+            <button class="close-modal-btn" onclick="closePurchaseModal()">&times;</button>
+            
+            <div class="modal-header-compact">
+                <div class="modal-product-preview">
+                    <img id="modalProductImg" src="" alt="Selected Product">
+                </div>
+                <div class="modal-header-details">
+                    <h3 id="invoiceManifest">Oversized T-Shirt</h3>
+                    <div class="modal-price">550 EGP</div>
+                </div>
+            </div>
+
+            <form id="checkoutForm">
+                <div class="modal-scrollable-form">
+                    
+                    <div class="form-group-compact">
+                        <label>اختر المقاس / Size *</label>
+                        <div class="size-circles-wrapper">
+                            <button type="button" class="size-circle-btn" onclick="selectSizeCircle('M')">M</button>
+                            <button type="button" class="size-circle-btn" onclick="selectSizeCircle('L')">L</button>
+                            <button type="button" class="size-circle-btn" onclick="selectSizeCircle('XL')">XL</button>
+                            <button type="button" class="size-circle-btn" onclick="selectSizeCircle('2XL')">2XL</button>
+                        </div>
+                        <input type="hidden" id="custSize" required>
+                    </div>
+
+                    <div class="form-group-compact">
+                        <label>الاسم بالكامل *</label>
+                        <input type="text" id="custName" placeholder="اكتب اسمك الثلاثي" required autocomplete="name">
+                    </div>
+
+                    <div class="form-group-compact">
+                        <label>رقم الواتساب *</label>
+                        <input type="tel" id="custPhone" placeholder="01xxxxxxxxx (11 رقم)" required pattern="[0-9]{11}" autocomplete="tel">
+                    </div>
+
+                    <div class="form-row-split">
+                        <div class="form-group-compact split-geo">
+                            <label>المحافظة *</label>
+                            <select id="custGovernorate" onchange="updateInvoiceManifestLocal()" required>
+                                <option value="" disabled selected>اختر</option>
+                                <option value="Cairo">القاهرة</option>
+                                <option value="Giza">الجيزة</option>
+                                <option value="Alexandria">الإسكندرية</option>
+                                <option value="Qalyubia">القليوبية</option>
+                                <option value="Sharqia">الشرقية</option>
+                                <option value="Gharbia">الغربية</option>
+                                <option value="Dakahlia">الدقهلية</option>
+                                <option value="Monufia">المنوفية</option>
+                                <option value="Beheira">البحيرة</option>
+                                <option value="Suez">السويس</option>
+                                <option value="Ismailia">الإسماعيلية</option>
+                                <option value="Port Said">بورسعيد</option>
+                                <option value="Fayoum">الفيوم</option>
+                                <option value="Beni Suef">بني سويف</option>
+                                <option value="Minya">المنيا</option>
+                                <option value="Assiut">أسيوط</option>
+                                <option value="Sohag">سوهاج</option>
+                                <option value="Qena">قنا</option>
+                                <option value="Luxor">الأقصر</option>
+                                <option value="Aswan">أسوان</option>
+                                <option value="New Valley">الوادي الجديد</option>
+                                <option value="Red Sea">البحر الأحمر</option>
+                                <option value="Marsa Matrouh">مرسى مطروح</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group-compact split-addr">
+                            <label>العنوان بالتفصيل *</label>
+                            <input type="text" id="custAddress" placeholder="الشارع، العمارة، الشقة" required>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="invoice-summary-strip">
+                    <div class="invoice-strip-item">الشحن: <span id="shippingPriceDisplay">0 EGP</span></div>
+                    <div class="invoice-strip-item">إجمالي الحساب: <span id="aggregateTotalDisplay">550 EGP</span></div>
+                </div>
+
+                <button type="submit" class="modal-submit-btn">تأكيد الطلب عبر الواتساب</button>
+            </form>
+        </div>
+    </div>
+
+    <button class="sticky-mobile-order-btn" id="stickyMobileBtn" onclick="openPurchaseModal('Earth Brown', 'images/products/brown/brown1.jpg')">اطلب الآن — خصم لفترة محدودة 🔥</button>
+
+    <footer class="brand-footer-system">
+        <div class="footer-container">
+            <div class="footer-logo">D8000</div>
+            <div class="footer-meta">© 2026 D8000 ARCHIVE. ALL RIGHTS RESERVED.</div>
+            <div class="footer-signature">
+                ENGINEERED BY <a href="https://wa.me/201096141190" target="_blank" class="dev-link">MOHAMED ELDODG</a>
+            </div>
+        </div>
+    </footer>
+
+        <script src="reviews.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
